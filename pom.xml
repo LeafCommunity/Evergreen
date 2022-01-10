@@ -75,6 +75,20 @@
       <version>0.2.0</version>
       <!-- Note: scope must be visible to dependent projects otherwise nullness annotations will not work as intended -->
     </dependency>
+    <!-- JUnit 5 (via maven-central) -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.8.2</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- AssertJ (via maven-central) -->
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <version>3.21.0</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
   
   <build>
