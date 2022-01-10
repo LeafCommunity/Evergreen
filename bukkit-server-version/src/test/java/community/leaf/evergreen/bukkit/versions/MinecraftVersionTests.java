@@ -45,6 +45,8 @@ public class MinecraftVersionTests
             .matches(ver -> ver.lessThan(3))
             .matches(ver -> ver.greaterThan(1, 2, 3))
             .matches(ver -> ver.atMost(1, 18))
+            .matches(ver -> ver.atMost(1, 17))
+            .matches(ver -> ver.atLeast(1, 17))
             .matches(ver -> ver.atLeast(1, 6));
     }
     
@@ -53,5 +55,18 @@ public class MinecraftVersionTests
     {
         assertThat(new MinecraftVersion(1,  7, 3).toString()).isEqualTo("1.7.3");
         assertThat(new MinecraftVersion(2,  0, 0).toString()).isEqualTo("2.0.0");
+    }
+    
+    @Test
+    public void testNegative()
+    {
+        assertThatThrownBy(() -> new MinecraftVersion(-1, 5, 2))
+            .isInstanceOf(IllegalArgumentException.class);
+        
+        assertThatThrownBy(() -> new MinecraftVersion(0, -5, 4))
+            .isInstanceOf(IllegalArgumentException.class);
+        
+        assertThatThrownBy(() -> new MinecraftVersion(0, 0, Integer.MIN_VALUE))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 }

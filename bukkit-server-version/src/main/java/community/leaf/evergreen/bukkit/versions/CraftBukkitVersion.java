@@ -15,6 +15,10 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Represents the internal package version of a Bukkit-based server.
+ */
+@SuppressWarnings("unused")
 public class CraftBukkitVersion extends MinecraftVersion
 {
     private static final Pattern VERSION_PATTERN =
@@ -25,6 +29,11 @@ public class CraftBukkitVersion extends MinecraftVersion
     
     private static @NullOr CraftBukkitVersion SERVER;
     
+    /**
+     * Gets the internal package version of the server.
+     *
+     * @return the server's internal package version
+     */
     public static CraftBukkitVersion server()
     {
         if (SERVER == null)
@@ -45,6 +54,15 @@ public class CraftBukkitVersion extends MinecraftVersion
         return SERVER;
     }
     
+    /**
+     * Parses the input text into a Minecraft version.
+     *
+     * <p>A valid version is: {@code v{major}_{minor}_R{patch}}, like: {@code v1_18_R1}.</p>
+     *
+     * @param text  input text
+     *
+     * @return the parsed version if successful, otherwise empty
+     */
     public static Optional<CraftBukkitVersion> parseCraftBukkitVersion(String text)
     {
         Objects.requireNonNull(text, "text");
@@ -64,20 +82,52 @@ public class CraftBukkitVersion extends MinecraftVersion
     private final String craftBukkitPackage;
     private final String minecraftPackage;
     
-    public CraftBukkitVersion(int major, int minor, int patch)
+    /**
+     * Constructs.
+     * The arguments are renamed to reflect the slight changes in format compared to a standard version.
+     *
+     * @param release   release version number
+     * @param major     major version number
+     * @param revision  revision version number
+     */
+    public CraftBukkitVersion(int release, int major, int revision)
     {
-        super(major, minor, patch);
-        this.packageVersion = "v" + major + "_" + minor + "_R" + patch;
+        super(release, major, revision);
+        this.packageVersion = "v" + release + "_" + major + "_R" + revision;
         this.craftBukkitPackage = "org.bukkit.craftbukkit." + packageVersion;
         this.minecraftPackage = (atLeast(1, 17)) ? "net.minecraft" : "net.minecraft.server." + packageVersion;
     }
     
+    /**
+     * Gets the {@code org.bukkit.craftbukkit} package for this version.
+     *
+     * @return versioned craftbukkit package
+     */
     public String craftBukkitPackage() { return craftBukkitPackage; }
     
+    /**
+     * Creates a fully-qualified class name from this version's {@code org.bukkit.craftbukkit} package.
+     *
+     * @param className     class name (with any required subpackages)
+     *
+     * @return fully-qualified class name within the versioned craftbukkit package
+     */
     public String craftBukkitClass(String className) { return craftBukkitPackage + "." + className; }
     
+    /**
+     * Gets the NMS package for this version, or simply {@code net.minecraft} if 1.17 or above.
+     *
+     * @return versioned NMS package
+     */
     public String minecraftPackage() { return minecraftPackage; }
     
+    /**
+     * Creates a fully-qualified class name from this version's {@code net.minecraft} (NMS) package.
+     *
+     * @param className     class name (with any required subpackages)
+     *
+     * @return fully-qualified class name within the versioned NMS package
+     */
     public String minecraftClass(String className) { return minecraftPackage + "." + className; }
     
     @Override
