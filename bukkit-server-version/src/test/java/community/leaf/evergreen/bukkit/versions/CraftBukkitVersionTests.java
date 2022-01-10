@@ -1,4 +1,4 @@
-package community.leaf.evergreen.bukkit.serverversion;
+package community.leaf.evergreen.bukkit.versions;
 
 import org.junit.jupiter.api.Test;
 

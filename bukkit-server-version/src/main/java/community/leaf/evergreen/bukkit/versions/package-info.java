@@ -6,6 +6,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 @NonNullPackage
-package community.leaf.evergreen.bukkit.serverversion;
+package community.leaf.evergreen.bukkit.versions;
 
 import pl.tlinkowski.annotation.basic.NonNullPackage;
