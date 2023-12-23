@@ -48,7 +48,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     
     <!-- License headers -->
-    <license.header.year>${project.inceptionYear}<!-- -${maven.build.timestamp} --></license.header.year>
+    <license.header.year>${project.inceptionYear}-${maven.build.timestamp}</license.header.year>
     <license.header.owner>RezzedUp</license.header.owner>
     <license.header.url>https://github.com/LeafCommunity/Evergreen</license.header.url>
     
