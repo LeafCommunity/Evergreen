@@ -41,14 +41,12 @@ public class CraftBukkitVersion extends MinecraftVersion
             String serverClassName = Bukkit.getServer().getClass().getCanonicalName();
             Matcher matcher = PACKAGE_VERSION_PATTERN.matcher(serverClassName);
             
-            if (!matcher.find())
-            {
-                throw new IllegalStateException("Cannot resolve version from package: " + serverClassName);
-            }
-            
-            SERVER = parseCraftBukkitVersion(matcher.group("version")).orElseThrow(() ->
-                new IllegalStateException("Cannot resolve version: " + matcher.group("version"))
-            );
+            SERVER = (matcher.find())
+                ? parseCraftBukkitVersion(matcher.group("version"))
+                    .orElseThrow(() ->
+                        new IllegalStateException("Cannot resolve version: " + matcher.group("version"))
+                    )
+                : new CraftBukkitVersion(MinecraftVersion.server());
         }
         
         return SERVER;
@@ -96,6 +94,11 @@ public class CraftBukkitVersion extends MinecraftVersion
         this.packageVersion = "v" + release + "_" + major + "_R" + revision;
         this.craftBukkitPackage = "org.bukkit.craftbukkit." + packageVersion;
         this.minecraftPackage = (atLeast(1, 17)) ? "net.minecraft" : "net.minecraft.server." + packageVersion;
+    }
+    
+    public CraftBukkitVersion(MinecraftVersion version)
+    {
+        this(version.major(), version.minor(), version.patch());
     }
     
     /**
